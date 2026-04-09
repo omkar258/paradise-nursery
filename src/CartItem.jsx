@@ -1,46 +1,55 @@
 import React, { useState } from "react";
 
 export default function CartItem() {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState([
+    { id: 1, name: "Aloe Vera", price: 10, qty: 1 }
+  ]);
 
-  const increase = (index) => {
-    const newCart = [...cart];
-    newCart[index].qty += 1;
-    setCart(newCart);
+  const increase = (id) => {
+    setCart(cart.map(item =>
+      item.id === id ? { ...item, qty: item.qty + 1 } : item
+    ));
   };
 
-  const decrease = (index) => {
-    const newCart = [...cart];
-    if (newCart[index].qty > 1) {
-      newCart[index].qty -= 1;
-      setCart(newCart);
-    }
+  const decrease = (id) => {
+    setCart(cart.map(item =>
+      item.id === id && item.qty > 1
+        ? { ...item, qty: item.qty - 1 }
+        : item
+    ));
   };
 
-  const remove = (index) => {
-    setCart(cart.filter((_, i) => i !== index));
+  const remove = (id) => {
+    setCart(cart.filter(item => item.id !== id));
   };
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   return (
     <div>
-      <h2>Cart</h2>
+      <h2>Shopping Cart</h2>
 
-      {cart.map((item, i) => (
-        <div key={i}>
+      {cart.map(item => (
+        <div key={item.id}>
           <p>{item.name}</p>
-          <p>${item.price}</p>
-          <button onClick={() => increase(i)}>+</button>
-          <button onClick={() => decrease(i)}>-</button>
-          <button onClick={() => remove(i)}>Delete</button>
+          <p>Price: ${item.price}</p>
+
+          <button onClick={() => increase(item.id)}>+</button>
+          <button onClick={() => decrease(item.id)}>-</button>
+          <button onClick={() => remove(item.id)}>Delete</button>
+
+          <p>Total: ${item.price * item.qty}</p>
         </div>
       ))}
 
-      <h3>Total: ${total}</h3>
+      <h3>Total Cart Amount: ${total}</h3>
 
       <button onClick={() => alert("Coming Soon")}>
         Checkout
+      </button>
+
+      <button onClick={() => window.location.href = "#plants"}>
+        Continue Shopping
       </button>
     </div>
   );
