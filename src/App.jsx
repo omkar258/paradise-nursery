@@ -2,9 +2,11 @@ import React from "react";
 
 function App() {
   return (
-    <div>
-      <h1>Paradise Nursery</h1>
-      <button onClick={() => alert("Welcome!")}>
+    <div style={{ textAlign: "center" }}>
+      <h1>🌿 Paradise Nursery</h1>
+      <p>Your one-stop shop for beautiful plants</p>
+
+      <button onClick={() => window.location.href = "#plants"}>
         Get Started
       </button>
     </div>
