@@ -1,1 +1,0 @@
-export default function AboutUs(){return(<div><h2>About Paradise Nursery</h2><p>Best plants online.</p></div>)}
